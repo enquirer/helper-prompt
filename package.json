@@ -1,0 +1,71 @@
+{
+  "name": "helper-prompt",
+  "description": "Async helper that prompts the user for input then uses the answers to render templates. Must be registered with a library that supports async helpers, like assemble or generate. After that it should work with handlebars, lo-dash or any other node.js engine that supports helper functions.",
+  "version": "1.0.0",
+  "homepage": "https://github.com/enquirer/helper-prompt",
+  "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "repository": "enquirer/helper-prompt",
+  "bugs": {
+    "url": "https://github.com/enquirer/helper-prompt/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=4"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "compile",
+    "helper",
+    "helpers",
+    "prompt",
+    "render",
+    "template",
+    "templates"
+  ],
+  "dependencies": {
+    "data-store": "^1.0.0",
+    "enquirer": "^0.4.1",
+    "extend-shallow": "^2.0.1",
+    "prompt-confirm": "^1.0.0"
+  },
+  "devDependencies": {
+    "templates": "^1.2.8",
+    "engine-handlebars": "^0.8.2",
+    "gulp-format-md": "^0.1.12"
+  },
+  "verb": {
+    "toc": false,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "related": {
+      "list": [
+        "enquirer",
+        "prompt-base",
+        "prompt-confirm",
+        "prompt-checkbox"
+      ]
+    },
+    "reflinks": [
+      "assemble",
+      "async-helpers",
+      "generate",
+      "generate-helper",
+      "helpers",
+      "templates"
+    ],
+    "lint": {
+      "reflinks": true
+    }
+  }
+}
