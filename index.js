@@ -11,6 +11,12 @@ module.exports = function(config) {
     var args = [].slice.call(arguments);
     cb = args.pop();
 
+    if (typeof question === 'function') {
+      cb = question;
+      options = name;
+      question = {};
+    }
+
     if (typeof options === 'function') {
       cb = options;
       options = question;
@@ -40,7 +46,8 @@ module.exports = function(config) {
       question = { message: question };
     }
 
-    enquirer.question(name, Object.assign({default: val}, question, options.hash));
+    question = Object.assign({default: val, name: name}, question, options.hash);
+    enquirer.question(question);
     enquirer.question('save', {
       type: 'confirm',
       message: 'Want to store the answer to skip this prompt next time?',
