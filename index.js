@@ -8,6 +8,7 @@ module.exports = function(config) {
   config = extend({name: 'helper-prompt'}, config);
 
   return function(name, question, options, cb) {
+    var store = null;
     var args = [].slice.call(arguments);
     cb = args.pop();
 
@@ -23,21 +24,6 @@ module.exports = function(config) {
       question = {};
     }
 
-    var store = null;
-    if (config.save !== false) {
-      store = config.store || new Store(config);
-      if (config.path) {
-        store.path = config.path;
-      }
-
-      var val = store.get(name);
-      var opts = extend({}, config, this && this.options);
-      if (opts.prompt !== true && val != null && val !== '') {
-        cb(null, val);
-        return;
-      }
-    }
-
     var enquirer = config.enquirer || new Enquirer();
     enquirer.register('confirm', require('prompt-confirm'));
     enquirer.register('checkbox', require('prompt-checkbox'));
@@ -47,7 +33,21 @@ module.exports = function(config) {
     }
 
     question = Object.assign({default: val, name: name}, question, options.hash);
-    name = question.name
+    name = question.name;
+    console.log(question)
+    if (config.save !== false) {
+      store = config.store || new Store(config);
+      if (config.path) {
+        store.path = config.path;
+      }
+
+      var val = store.get(name);
+      var opts = extend({}, question, config, this && this.options);
+      if (opts.prompt !== true && val != null && val !== '') {
+        cb(null, val);
+        return;
+      }
+    }
 
     enquirer.question(name, question);
     enquirer.question('save', {
@@ -59,9 +59,13 @@ module.exports = function(config) {
         }
         if (answer === true) {
           store.set(name, this.answers[name]);
-          console.log('√ saved on "' + name + '" in "' + store.relative + '"');
+          if (opts.verbose) {
+            console.log('√ saved on "' + name + '" in "' + store.relative + '"');
+          }
         } else {
-          console.log(' got it, skipping');
+          if (opts.verbose) {
+            console.log(' got it, skipping');
+          }
         }
         return answer;
       },
@@ -75,7 +79,11 @@ module.exports = function(config) {
     });
 
     enquirer.prompt(name)
-      .then(function() {
+      .then(function(answers) {
+        if (config.save === true) {
+          store.set(name, answers[name]);
+          return answers;
+        }
         return enquirer.prompt('save');
       })
       .then(function(answers) {
