@@ -9,8 +9,15 @@ module.exports = function(config) {
 
   return function(name, question, options, cb) {
     var args = [].slice.call(arguments);
-    var store = null;
+    cb = args.pop();
 
+    if (typeof options === 'function') {
+      cb = options;
+      options = question;
+      question = {};
+    }
+
+    var store = null;
     if (config.save !== false) {
       store = config.store || new Store(config);
       if (config.path) {
@@ -27,8 +34,8 @@ module.exports = function(config) {
 
     var enquirer = config.enquirer || new Enquirer();
     enquirer.register('confirm', require('prompt-confirm'));
+    enquirer.register('checkbox', require('prompt-checkbox'));
 
-    cb = args.pop();
     if (typeof question === 'string') {
       question = { message: question };
     }
@@ -53,7 +60,8 @@ module.exports = function(config) {
         if (config.save === false) {
           return false;
         }
-        return answers[name].trim() !== '';
+        var val = answers[name] || '';
+        return val.trim() !== '';
       }
     });
 
