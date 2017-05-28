@@ -12,7 +12,9 @@ app.page('example.hbs', {
   content: 'My name is: {{prompt "What is your name?"}}\nFoo: {{prompt "foo?" type="confirm" default=false}}\nFoo: {{prompt "Letters:" type="checkbox" choices=choices}}'
 });
 
-app.render('example.hbs', function(err, view) {
+app.page('default-val.hbs', 'My name is: {{prompt "Color?" default="blue"}}');
+
+app.render('default-val.hbs', function(err, view) {
   if (err) {
     console.log(err);
     process.exit(1);
