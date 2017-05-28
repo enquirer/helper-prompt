@@ -47,7 +47,9 @@ module.exports = function(config) {
     }
 
     question = Object.assign({default: val, name: name}, question, options.hash);
-    enquirer.question(question);
+    name = question.name
+
+    enquirer.question(name, question);
     enquirer.question('save', {
       type: 'confirm',
       message: 'Want to store the answer to skip this prompt next time?',
