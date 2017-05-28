@@ -1,7 +1,7 @@
 {
   "name": "helper-prompt",
   "description": "Async helper that prompts the user for input then uses the answers to render templates. Must be registered with a library that supports async helpers, like assemble or generate. After that it should work with handlebars, lo-dash or any other node.js engine that supports helper functions.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://github.com/enquirer/helper-prompt",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "enquirer/helper-prompt",
@@ -30,8 +30,9 @@
   ],
   "dependencies": {
     "data-store": "^1.0.0",
-    "enquirer": "^0.4.1",
+    "enquirer": "^1.0.2",
     "extend-shallow": "^2.0.1",
+    "prompt-checkbox": "^2.0.1",
     "prompt-confirm": "^1.0.0"
   },
   "devDependencies": {
@@ -52,8 +53,8 @@
       "list": [
         "enquirer",
         "prompt-base",
-        "prompt-confirm",
-        "prompt-checkbox"
+        "prompt-checkbox",
+        "prompt-confirm"
       ]
     },
     "reflinks": [
@@ -62,7 +63,11 @@
       "generate",
       "generate-helper",
       "helpers",
-      "templates"
+      "templates",
+      "data-store",
+      "prompt-checkbox",
+      "prompt-confirm",
+      "prompt-text"
     ],
     "lint": {
       "reflinks": true
